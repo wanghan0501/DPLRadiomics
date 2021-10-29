@@ -1,7 +1,7 @@
 # Deep learning radiomics model related with genomics phenotypes for lymph node metastasis prediction in colorectal cancer
 
 ## AI Model
-This folder incldes the python codes of extracting DPL features by using `AutoEncoder`.
+This folder includes the python codes of extracting DPL features by using `AutoEncoder`.
 
 ## How to use
 
