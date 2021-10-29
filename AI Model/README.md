@@ -35,7 +35,7 @@ optional arguments:
 ```
 
 ### Extracting DPL features
-Please use the notebook to extracing the DPL features. We provide [an example](jupyter_notebooks/test_3d_sample.ipynb) of how to extracing DPL features.
+Please use the notebook to extrace the DPL features. We provide [an example](jupyter_notebooks/test_3d_sample.ipynb) of how to extracing DPL features.
 
 
 ### Configuration
