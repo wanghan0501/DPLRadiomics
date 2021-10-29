@@ -1,0 +1,86 @@
+dataset: DCH_AI
+task: autoencoder
+
+data:
+  data_root: /root/workspace/DCH_AI/data_crc_3d
+  train_record_csv: /root/workspace/DCH_AI/records/crc/train_v_crc_labels.csv
+  eval_record_csv: /root/workspace/DCH_AI/records/crc/test_v_crc_labels.csv
+  color_channels: 1
+
+train:
+  batch_size: 6
+  num_workers: 8
+  pin_memory: true
+  aug_trans:
+    trans_seq: [ resize, normalize, to_tensor ]
+    normalize:
+      mean: 128
+      std: 128
+    resize:
+      size: [64, 80, 80]
+
+eval:
+  batch_size: 6
+  num_workers: 8
+  pin_memory: true
+  aug_trans:
+    trans_seq: [ resize, normalize, to_tensor ]
+    normalize:
+      mean: 128
+      std: 128
+    resize:
+      size: [64, 80, 80]
+
+logging:
+  use_logging: true
+  ckpt_path: ckpts/crc_ae/
+  use_tensorboard: true
+  run_path: runs/crc_ae/
+  logging_dir: v_ae_latent_size.512_amcm.64_leakyrelu_aeloss
+
+
+optim:
+  num_epochs: 200
+  # support optim method: [sgd, adam, adamW]
+  optim_method: sgd
+  sgd:
+    base_lr: 1e-3
+    momentum: 0.9
+    weight_decay: 5e-4
+    nesterov: false
+  adam:
+    base_lr: 1e-4
+    betas: [ 0.5, 0.999 ]
+    weight_decay: 5e-4
+    amsgrad: false
+  adamW:
+    base_lr: 1e-4
+    betas: [ 0.5, 0.999 ]
+    weight_decay: 5e-4
+    amsgrad: false
+  use_lr_decay: true
+  # support lr_decay method: [cosine, exponent, warmup]
+  lr_decay_method: warmup
+  cosine:
+    eta_min: 0
+    T_max: 200
+  exponent:
+    gamma: 0.99
+  warmup:
+    multiplier: 10
+    total_epoch: 10
+    after_scheduler: cosine
+
+criterion:
+  # support criterion method: [mse_loss, ae_loss]
+  criterion_method: ae_loss
+
+network:
+  net_name: ae
+  # autoencoder_model_latent_space_size
+  latent_size: 512
+  # autoencoder_model_complexity_multipler
+  amcm: 64
+  use_pretrained: false
+  seed: 42
+  num_gpus: None
